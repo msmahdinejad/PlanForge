@@ -7,7 +7,7 @@ The project is intentionally split into two parts:
 - a polished framework that loads JSON apartment cases, builds finite domains, validates layouts, scores architectural quality, and visualizes the result;
 - a student-owned `student/` package where the solver logic must be implemented.
 
-![PlanForge studio screenshot](assets/screenshots/planforge-studio-medium.png)
+![PlanForge solved layout screenshot](assets/screenshots/guide-solved-layout.jpg)
 
 ## What Students Build
 
@@ -42,13 +42,15 @@ Students implement:
 
 The assignment turns a JSON floor-plan description into a finite-domain CSP, runs the student solver, validates the result, and renders the final layout.
 
-![PlanForge CSP workflow](assets/screenshots/planforge-csp-workflow.png)
+```text
+JSON problem -> finite rectangle domains -> student solver -> validator -> visualizer
+```
 
 ### Layout Studio
 
 The desktop studio lets students select a problem file, run the solver, inspect runtime metrics, and view the generated apartment plan. Rooms are drawn as colored rectangles, exterior windows are highlighted in blue, door openings are shown in brown, and unused grid cells are marked.
 
-![Solved medium apartment layout](assets/screenshots/planforge-studio-medium.png)
+![Solved apartment layout](assets/screenshots/guide-solved-layout.jpg)
 
 ### Visual Solve and DFS Tree
 
@@ -63,13 +65,13 @@ This mode helps students see:
 - where valid solutions were discovered;
 - how MRV, LCV, forward checking, and AC-3 affect search behavior.
 
-![Visual solve tree screenshot](assets/screenshots/planforge-visual-solve-tree.png)
+![Visual solve tree screenshot](assets/screenshots/guide-visual-solve-tree.png)
 
 ### Public Self-Check
 
 The public self-check gives visible feedback for required and optional behavior. It is useful for debugging, but it is not the final grader.
 
-![Public grader screenshot](assets/screenshots/planforge-public-grade.png)
+![Public grader screenshot](assets/screenshots/guide-public-grader.png)
 
 ## Technical Report
 

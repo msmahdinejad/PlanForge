@@ -63,11 +63,11 @@ The framework separates problem definition, domain generation, student search, v
 and visualization. This separation keeps the assignment fair: students implement the algorithmic
 core, while the framework provides consistent loading, checking, rendering, and reporting.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{planforge-csp-workflow.png}
-  \caption{PlanForge transforms a declarative floor-plan case into domains, runs the student solver, validates the result, and visualizes the outcome.}
-\end{figure}
+The conceptual workflow is:
+
+\begin{center}
+\texttt{JSON problem -> finite domains -> student solver -> validator -> visualizer}
+\end{center}
 
 \section{CSP Formulation}
 
@@ -261,7 +261,7 @@ visual encodings.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{planforge-visual-solve-tree.png}
+  \includegraphics[width=\textwidth]{guide-visual-solve-tree.png}
   \caption{Visual solve mode shows the generated apartment and a DFS search tree driven by \texttt{SolverContext} trace hooks.}
 \end{figure}
 
@@ -277,7 +277,7 @@ windows are shown on exterior-facing rooms, and unused cells are highlighted.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{planforge-studio-medium.png}
+  \includegraphics[width=\textwidth]{guide-solved-layout.jpg}
   \caption{The desktop studio view for a solved medium apartment case.}
 \end{figure}
 
@@ -313,7 +313,7 @@ performance behavior. It is explicitly not the final grader.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{planforge-public-grade.png}
+  \includegraphics[width=\textwidth]{guide-public-grader.png}
   \caption{Public self-check dashboard generated from the reference implementation.}
 \end{figure}
 
