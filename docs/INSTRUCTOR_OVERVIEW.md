@@ -10,7 +10,7 @@ The repository intentionally contains only the public assignment surface:
 - `planforge/examples/`: visible JSON cases covering easy, medium, hard, unsatisfiable, and bonus stress-test scenarios.
 - `planforge/grader/`: public self-check wrapper and compiled binaries for supported Python/OS combinations.
 - `student/`: starter files with explicit TODOs for the solver, consistency checks, heuristics, inference, and soft scoring.
-- `docs/PlanForge_Project_Guide_FA.pdf`: the official Persian project guide.
+- `docs/PlanForge_Technical_Report.pdf`: the English technical report generated from LaTeX.
 
 ## Private Material Policy
 
@@ -30,4 +30,5 @@ Before distributing the project:
 1. Run `python -m compileall planforge student`.
 2. Run `python run_app.py` and manually verify that the visualizer opens.
 3. Run `python run_public_grade.py` with the reference solution package, not the starter package.
-4. Confirm that no private grader, hidden cases, reference solution code, or batch grading reports are present in the public repository.
+4. Rebuild `docs/PlanForge_Technical_Report.pdf` from `docs/PlanForge_Technical_Report.tex` if documentation changes.
+5. Confirm that no private grader, hidden cases, reference solution code, or batch grading reports are present in the public repository.

@@ -1,20 +1,27 @@
 # PlanForge
 
-**PlanForge** is a constraint satisfaction problem (CSP) project for generating apartment floor plans from declarative room and adjacency constraints. It was designed for the Artificial Intelligence Fundamentals and Applications course as a hands-on assignment in backtracking search, consistency checking, variable/value ordering, inference, and soft optimization.
+**PlanForge** is a constraint satisfaction problem (CSP) framework for generating apartment floor plans from declarative architectural constraints. It was designed as an Artificial Intelligence Fundamentals and Applications assignment focused on recursive backtracking, consistency checking, MRV, LCV, inference, soft scoring, and search visualization.
+
+The project is intentionally split into two parts:
+
+- a polished framework that loads JSON apartment cases, builds finite domains, validates layouts, scores architectural quality, and visualizes the result;
+- a student-owned `student/` package where the solver logic must be implemented.
 
 ![PlanForge studio screenshot](assets/screenshots/planforge-studio-medium.png)
 
-## Project Idea
+## What Students Build
 
-Students are given a fixed apartment shell, a set of rooms, and a JSON problem definition containing hard constraints such as adjacency, boundary access, entrance distance, room area limits, and layout connectivity. Their task is to complete the solver inside `student/` so the framework can place all rooms on a grid and return a valid architectural layout.
+Students receive a fixed apartment shell, a list of rooms, and a set of hard constraints. Their solver must assign one rectangle to each room so that the final apartment plan is valid.
 
-The framework already provides:
+The framework provides:
 
-- JSON problem loading and domain generation
-- room geometry primitives
+- JSON problem loading
+- finite rectangle-domain generation
+- geometry helpers
 - hard-constraint validation
 - architectural quality scoring
-- a Tkinter desktop visualizer
+- a desktop visualizer
+- a Visual solve trace mode
 - public self-check tooling
 - visible easy, medium, hard, unsatisfiable, and bonus challenge cases
 
@@ -22,45 +29,77 @@ Students implement:
 
 - recursive backtracking search
 - complete-assignment detection
-- consistency checks for partial assignments
+- partial consistency checking
 - MRV variable selection
 - LCV value ordering
-- optional forward checking and AC-3
-- optional soft scoring for better layouts
+- optional forward checking
+- optional AC-3 preprocessing
+- optional soft scoring for better floor plans
 
-## Screenshots
+## Visual Overview
 
-### Visual Layout Studio
+### CSP Workflow
 
-The desktop app lets students select a JSON case, run their solver, inspect metrics, and view the generated apartment plan.
+The assignment turns a JSON floor-plan description into a finite-domain CSP, runs the student solver, validates the result, and renders the final layout.
+
+![PlanForge CSP workflow](assets/screenshots/planforge-csp-workflow.png)
+
+### Layout Studio
+
+The desktop studio lets students select a problem file, run the solver, inspect runtime metrics, and view the generated apartment plan. Rooms are drawn as colored rectangles, exterior windows are highlighted in blue, door openings are shown in brown, and unused grid cells are marked.
 
 ![Solved medium apartment layout](assets/screenshots/planforge-studio-medium.png)
 
-### Public Self-Check Dashboard
+### Visual Solve and DFS Tree
 
-The public self-check provides visible feedback for required and optional behavior. It is not the final grader.
+The **Visual solve** mode is the most important teaching feature. It runs the real student solver with tracing enabled, then replays the recorded search. The apartment canvas updates as assignments are made and removed, while the lower panel displays the DFS/backtracking tree.
+
+This mode helps students see:
+
+- which variable was selected next;
+- which room rectangle was tried;
+- where the algorithm backtracked;
+- how pruning changes the search tree;
+- where valid solutions were discovered;
+- how MRV, LCV, forward checking, and AC-3 affect search behavior.
+
+![Visual solve tree screenshot](assets/screenshots/planforge-visual-solve-tree.png)
+
+### Public Self-Check
+
+The public self-check gives visible feedback for required and optional behavior. It is useful for debugging, but it is not the final grader.
 
 ![Public grader screenshot](assets/screenshots/planforge-public-grade.png)
+
+## Technical Report
+
+A full English LaTeX technical report is included:
+
+- [PlanForge Technical Report PDF](docs/PlanForge_Technical_Report.pdf)
+- [PlanForge Technical Report LaTeX source](docs/PlanForge_Technical_Report.tex)
+
+The report explains the CSP formulation, JSON schema, framework architecture, solver instrumentation, Visual solve mode, quality scoring, public/private grading split, and recommended student implementation path.
 
 ## Repository Structure
 
 ```text
 PlanForge/
-├── assets/
-│   └── screenshots/
-├── docs/
-│   ├── INSTRUCTOR_OVERVIEW.md
-│   └── PlanForge_Project_Guide_FA.pdf
-├── planforge/
-│   ├── core/
-│   ├── examples/
-│   └── grader/
-├── student/
-├── run_app.py
-├── run_public_grade.py
-├── run_windows.bat
-├── requirements.txt
-└── README.md
+|-- assets/
+|   `-- screenshots/
+|-- docs/
+|   |-- INSTRUCTOR_OVERVIEW.md
+|   |-- PlanForge_Technical_Report.pdf
+|   `-- PlanForge_Technical_Report.tex
+|-- planforge/
+|   |-- core/
+|   |-- examples/
+|   `-- grader/
+|-- student/
+|-- run_app.py
+|-- run_public_grade.py
+|-- run_windows.bat
+|-- requirements.txt
+`-- README.md
 ```
 
 ## Quick Start
@@ -85,20 +124,20 @@ run_windows.bat
 python run_public_grade.py
 ```
 
-The public grader is designed for feedback only. Official grading should use private hidden tests outside this repository.
+The public grader is a self-check only. Official grading should use private hidden cases outside this repository.
 
 ## Student Work Area
 
-Only the files in `student/` are intended to be edited by students:
+Only these files are intended to be edited by students:
 
 ```text
 student/
-├── solver.py
-├── consistency.py
-├── heuristics.py
-├── inference.py
-├── scoring.py
-└── README_STUDENT_FILES.md
+|-- solver.py
+|-- consistency.py
+|-- heuristics.py
+|-- inference.py
+|-- scoring.py
+`-- README_STUDENT_FILES.md
 ```
 
 Changing framework files under `planforge/`, examples, or grader files should not be required for a valid submission.
@@ -107,15 +146,15 @@ Changing framework files under `planforge/`, examples, or grader files should no
 
 Each apartment problem is defined as a JSON file under `planforge/examples/`. A case specifies:
 
-- grid width and height
-- entrance location
-- required rooms
-- minimum and maximum room areas
-- allowed room dimensions
-- exterior-access requirements
-- hard constraints such as `adjacent`, `not_adjacent`, `near_entrance`, `far_from_entrance`, `touches_boundary`, and `touches_wall`
-- minimum coverage ratio
-- connectivity requirements
+- grid width and height;
+- entrance location;
+- required rooms;
+- minimum and maximum room areas;
+- allowed room dimensions;
+- exterior-access requirements;
+- hard constraints such as `adjacent`, `not_adjacent`, `near_entrance`, `far_from_entrance`, `touches_boundary`, and `touches_wall`;
+- minimum coverage ratio;
+- connectivity requirements.
 
 The framework converts every room specification into a finite domain of valid rectangles. The student solver then searches over room-to-rectangle assignments.
 
@@ -125,29 +164,33 @@ The assignment has a 100-point required section and a 30-point optional section.
 
 Required work covers:
 
-- API importability
-- recursive backtracking
-- hard-constraint consistency
-- MRV and LCV behavior
-- valid layouts for visible public cases
-- unsatisfiable-case detection
-- solver instrumentation through `SolverContext`
+- API importability;
+- recursive backtracking;
+- hard-constraint consistency;
+- MRV and LCV behavior;
+- valid layouts for visible public cases;
+- unsatisfiable-case detection;
+- solver instrumentation through `SolverContext`.
 
 Optional work rewards:
 
-- forward checking
-- AC-3 preprocessing
-- stronger pruning
-- high-quality layouts under finite search limits
-- meaningful soft scoring
+- forward checking;
+- AC-3 preprocessing;
+- stronger pruning;
+- high-quality layouts under finite search limits;
+- meaningful soft scoring.
 
-See [Instructor Overview](docs/INSTRUCTOR_OVERVIEW.md) for release and grading notes.
+## Private Material Policy
 
-## Official Project Guide
+This repository intentionally excludes instructor-only material:
 
-The full Persian project guide is available here:
+- private grader source;
+- hidden tests;
+- reference solution source code;
+- batch grading results;
+- private grade reports.
 
-[PlanForge Project Guide FA](docs/PlanForge_Project_Guide_FA.pdf)
+The public repository is for assignment release and demonstration. Final grading should remain private.
 
 ## Author
 
