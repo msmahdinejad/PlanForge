@@ -9,6 +9,12 @@ The project is intentionally split into two parts:
 
 ![PlanForge solved layout screenshot](assets/screenshots/guide-solved-layout.jpg)
 
+## Demo Video
+
+<video src="assets/videos/planforge-demo.mp4" controls width="100%" title="PlanForge demo"></video>
+
+[Watch the PlanForge demo video](assets/videos/planforge-demo.mp4)
+
 ## What Students Build
 
 Students receive a fixed apartment shell, a list of rooms, and a set of hard constraints. Their solver must assign one rectangle to each room so that the final apartment plan is valid.
@@ -87,7 +93,8 @@ The report explains the CSP formulation, JSON schema, framework architecture, so
 ```text
 PlanForge/
 |-- assets/
-|   `-- screenshots/
+|   |-- screenshots/
+|   `-- videos/
 |-- docs/
 |   |-- INSTRUCTOR_OVERVIEW.md
 |   |-- PlanForge_Technical_Report.pdf
