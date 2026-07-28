@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+!planforge/grader/*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local grading/submission artifacts
+submissions/
+grade_results*/
+grading_all_rounds/
+manual_inspection*/
+private_grade_report.json
+public_grade_report.json
+*_private_grade_report.json
+
+# Build/output artifacts
+dist/
+build/
+*.egg-info/

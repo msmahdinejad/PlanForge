@@ -1,0 +1,15 @@
+[project]
+name = "planforge"
+version = "0.1.0"
+description = "A CSP-based apartment floor-plan generation assignment framework."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Mohammad Saleh Mahdinejad", email = "" }
+]
+
+[tool.setuptools]
+packages = ["planforge", "planforge.core", "planforge.grader", "student"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
