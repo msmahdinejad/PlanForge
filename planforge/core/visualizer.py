@@ -450,7 +450,7 @@ class PlanForgeApp:
     def _clear_control_focus(self, event):
         try:
             widget = event.widget
-            if isinstance(widget, (tk.Entry, tk.Text, ttk.Combobox)):
+            if self._is_text_or_combobox_interaction(widget):
                 return
             self.root.after(1, self.root.focus_set)
             if hasattr(self, 'combo'):
@@ -460,6 +460,19 @@ class PlanForgeApp:
                     pass
         except Exception:
             pass
+
+    def _is_text_or_combobox_interaction(self, widget) -> bool:
+        if isinstance(widget, (tk.Entry, tk.Text, ttk.Combobox)):
+            return True
+        try:
+            widget_class = widget.winfo_class()
+            widget_path = str(widget).lower()
+        except Exception:
+            return False
+        # Ttk renders a combobox dropdown as a separate popdown/listbox widget.
+        # Treat those clicks as part of the combobox selection instead of
+        # stealing focus before Tk has committed the mouse-picked value.
+        return widget_class in {'Listbox', 'ComboboxPopdown'} or 'popdown' in widget_path
 
     def _in_dfs_graph(self, x, y):
         region = getattr(self, 'dfs_graph_region', None)
